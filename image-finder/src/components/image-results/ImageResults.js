@@ -27,7 +27,7 @@ class ImageResults extends React.Component {
 
     if (images) {
       imageListContent = (
-        <GridList cols={3}>
+        <GridList cols={3} spacing={6}>
           {images.map(image => (
             <GridTile
               title={image.tags}
