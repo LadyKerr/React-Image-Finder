@@ -10,11 +10,11 @@ import Loader from "react-loader-spinner";
 class ImageResults extends React.Component {
   state = {
     open: false,
-    currentImg: ""
+    currentImage: ""
   };
 
-  handleOpen = img => {
-    this.SetState({ open: true, currentImg: img });
+  handleOpen = image => {
+    this.setState({ open: true, currentImage: image });
   };
 
   handleClose = () => {
@@ -29,23 +29,22 @@ class ImageResults extends React.Component {
       imageListContent = (
         <GridList cols={3}>
           {images.map(image => (
-            <GridTile>
+            <GridTile
               title={image.tags}
               key={image.id}
-              subtitle=
-              {
+              subtitle={
                 <span>
                   by: <strong>{image.user}</strong>
                 </span>
               }
-              actionIcon ={" "}
-              {
-                <IconButton>
+              actionIcon={
+                <IconButton
+                  onClick={() => this.handleOpen(image.largeImageURL)}
+                >
                   <ZoomIn color="white" />
                 </IconButton>
               }
-              <img src={image.largeImageURL} alt={image.username} />
-            </GridTile>
+            />
           ))}
         </GridList>
       );
@@ -54,7 +53,23 @@ class ImageResults extends React.Component {
         <Loader type="Puff" color="ffb900" height={60} width={60} />
       );
     }
-    return <div>{imageListContent}</div>;
+
+    const actions = [
+      <FlatButton label="Close" primary={true} onClick={this.handleClose} />
+    ];
+
+    return (
+      <div>
+        {imageListContent}
+        <Dialog
+          actions={actions}
+          modal={false}
+          open={this.state.open}
+          onRequestClose={this.handleClose}
+        />
+        <img src={this.state.currentImage} alt="" style={{ width: "100%" }} />
+      </div>
+    );
   }
 }
 

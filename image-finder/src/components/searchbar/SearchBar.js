@@ -6,7 +6,6 @@ import SelectField from "material-ui/SelectField";
 import MenuItem from "material-ui/MenuItem";
 import FlatButton from "material-ui/FlatButton";
 
-
 class SearchBar extends React.Component {
   state = {
     searchInput: "",
@@ -18,9 +17,9 @@ class SearchBar extends React.Component {
 
   onSearchChange = e => {
     const val = e.target.value;
-    this.setState({ [e.target.name]: e.target.value }, () => {
-      if (val === "") {
-        this.setstate({ images: [] });
+    this.setState({ [e.target.name]: val }, () => {
+      if (val === " ") {
+        this.setState({ images: [] });
       } else {
         axios
           .get(
@@ -77,9 +76,7 @@ class SearchBar extends React.Component {
         <br />
         {this.state.images.length > 0 ? (
           <ImageResults images={this.state.images} />
-        ) : (
-          null
-        )}
+        ) : null}
       </div>
     );
   }
