@@ -44,9 +44,7 @@ class ImageResults extends React.Component {
                   <ZoomIn color="white" />
                 </IconButton>
               }
-            >
-              <img src={image.largeImageURL} alt="" />
-            </GridTile>
+            />
           ))}
         </GridList>
       );
