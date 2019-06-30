@@ -4,13 +4,17 @@ import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import NavBar from "./components/navbar/NavBar";
 import SearchBar from "./components/searchbar/SearchBar";
 
-const App = () => {
-  return (
-    <MuiThemeProvider>
-      <NavBar />
-      <SearchBar />
-    </MuiThemeProvider>
-  );
-};
+class App extends React.Component {
+  render() {
+    return (
+      <MuiThemeProvider>
+        <div>
+          <NavBar />
+          <SearchBar />
+        </div>
+      </MuiThemeProvider>
+    );
+  }
+}
 
 export default App;

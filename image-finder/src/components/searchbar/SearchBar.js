@@ -9,7 +9,7 @@ import FlatButton from "material-ui/FlatButton";
 class SearchBar extends React.Component {
   state = {
     searchInput: "",
-    amount: 5,
+    amount: 20,
     images: [],
     baseUrl: "https://pixabay.com/api/",
     apiKey: "12908939-a258f64c5e7e855c20dfeed3c"
@@ -68,6 +68,7 @@ class SearchBar extends React.Component {
           value={this.state.amount}
           onChange={this.onAmountChange}
         >
+          <MenuItem value={0} primaryText="0" />
           <MenuItem value={10} primaryText="10" />
           <MenuItem value={30} primaryText="30" />
           <MenuItem value={40} primaryText="40" />

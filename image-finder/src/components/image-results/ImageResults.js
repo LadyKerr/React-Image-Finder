@@ -66,8 +66,9 @@ class ImageResults extends React.Component {
           modal={false}
           open={this.state.open}
           onRequestClose={this.handleClose}
-        />
-        <img src={this.state.currentImage} alt="" style={{ width: "100%" }} />
+        >
+          <img src={this.state.currentImage} alt="" style={{ width: "100%" }} />
+        </Dialog>
       </div>
     );
   }
