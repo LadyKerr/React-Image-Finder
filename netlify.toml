@@ -1,0 +1,7 @@
+[Settings]
+ID = 'dad2c0ee-e57a-4e4a-bb35-8ac9ef609466'
+
+[build]
+base = 'image-finder/'
+publish = 'image-finder/build'
+command = 'yarn build'
