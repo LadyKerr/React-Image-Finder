@@ -3,44 +3,45 @@ import axios from "axios";
 import ImageResults from "../image-results/ImageResults";
 import TextField from "material-ui/TextField";
 import SelectField from "material-ui/SelectField";
+import MenuItem from "material-ui/MenuItem";
 import FlatButton from "material-ui/FlatButton";
+
 
 class SearchBar extends React.Component {
   state = {
     searchInput: "",
-    amount: 20,
+    amount: 5,
     images: [],
     baseUrl: "https://pixabay.com/api/",
     apiKey: "12908939-a258f64c5e7e855c20dfeed3c"
   };
 
-  componentDidMount() {
-    this.getImagesData();
-  }
-
   onSearchChange = e => {
-    this.setState({
-      [e.target.name]: e.target.value
+    const val = e.target.value;
+    this.setState({ [e.target.name]: e.target.value }, () => {
+      if (val === "") {
+        this.setstate({ images: [] });
+      } else {
+        axios
+          .get(
+            `${this.state.baseUrl}/?key=${this.state.apiKey}&q=${
+              this.state.searchInput
+            }&image_type=photo&safesearch=true`
+          )
+          .then(res => {
+            this.setState({
+              images: res.data.hits
+            });
+          })
+          .catch(err => console.log(err.response));
+      }
     });
   };
 
-  getImagesData = () => {
-    axios
-      .get(
-        `${this.state.baseUrl}?key=${this.state.apiKey}&q=${
-          this.state.searchInput
-        }&image_type=photo&safesearch=true`
-      )
-      .then(res => {
-        console.log(res);
-        this.setState({
-          images: res.data.hits
-        });
-      })
-      .catch(err => console.log(err.response));
-  };
+  onAmountChange = (e, index, value) => this.setState({ amount: value });
 
   render() {
+    console.log(this.state.images);
     return (
       <div>
         <br />
@@ -53,7 +54,6 @@ class SearchBar extends React.Component {
           onChange={this.onSearchChange}
         />
         <FlatButton
-          onSubmit={this.getImagesData}
           label="search"
           style={{
             backgroundColor: "#ffb900",
@@ -62,11 +62,24 @@ class SearchBar extends React.Component {
           }}
         />
         <br />
-        <div>
-          {this.state.images.map(image => (
-            <ImageResults image={image} key={image.id} />
-          ))}
-        </div>
+        <p>How many images do you want?</p>
+        <SelectField
+          name="amount"
+          label="Amount"
+          value={this.state.amount}
+          onChange={this.onAmountChange}
+        >
+          <MenuItem value={10} primaryText="10" />
+          <MenuItem value={30} primaryText="30" />
+          <MenuItem value={40} primaryText="40" />
+          <MenuItem value={50} primaryText="50" />
+        </SelectField>
+        <br />
+        {this.state.images.length > 0 ? (
+          <ImageResults images={this.state.images} />
+        ) : (
+          null
+        )}
       </div>
     );
   }
